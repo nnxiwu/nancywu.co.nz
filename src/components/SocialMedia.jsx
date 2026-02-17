@@ -10,7 +10,7 @@ const SocialMedia = () => {
     <div className="text-primary fixed bottom-0 invisible md:visible md:pl-20 lg:pl-30 text-4xl flex-col">
       <Reveal delay={6} duration={1}>
         <div className="relative flex flex-col">
-          <Link className="flex shrink" to="https://github.com/nancywu45" target="_blank">
+          <Link className="flex shrink" to="https://github.com/nnxiwu" target="_blank">
             <Enlarge scale={1.1}>
               <AiFillGithub className="my-2"/>
             </Enlarge>

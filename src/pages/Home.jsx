@@ -45,8 +45,7 @@ const Home = forwardRef(({aboutRef}, ref) => {
         </Reveal>
         <RevealFromBtm delay={4.5} duration={1}>
           <p className="font-code text-sm md:text-base lg:text-lg pt-8 pb-10 md:pb-14 max-w-xl lg:max-w-3xl text-grey">
-            I’m a final year Computer Science and Commerce student at the
-            University of Auckland passionate about software development and the
+            I’m a frontend software developer at Canva passionate about software development and the
             interconnection between business and technology.
           </p>
         </RevealFromBtm>

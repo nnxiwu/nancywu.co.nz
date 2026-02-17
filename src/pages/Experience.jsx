@@ -5,12 +5,21 @@ const Experience = forwardRef((props, ref) => {
 
   const work = [
     {
+      id: 'Canva',
+      company: 'Canva',
+      role: 'Software Engineer Intern',
+      startDate: 'Dec 2024',
+      endDate: 'Feb 2025',
+      bullet1: 'Spearheaded landing page technical debt clean-up project to migrate bespoke pages to an in-house CMS tool for pages with 250,000+ views/year, using Next.js and GraphQL',
+      bullet2: 'Initiated and aligned conversations between 10+ stakeholders including designers, engineers, project managers and content administrators',
+    },
+    {
       id: 'Unleashed',
       company: 'Unleashed Software',
       role: 'Developer Intern',
       startDate: 'Jan 2024',
       endDate: 'Nov 2024',
-      bullet1: 'Developing and maintaining production code for core features across the Inventory Management System, primarily using, C#, .NET, and Javascript',
+      bullet1: 'Developed and maintained production code for core features across the Inventory Management System, primarily using, C#, .NET, and Javascript',
       bullet2: 'Collaborating with the engineering team in an agile environment using Scrum methodology',
     },
     {
@@ -54,7 +63,7 @@ const Experience = forwardRef((props, ref) => {
     }
   ]
 
-  const [workToggle, setWorkToggle] = useState('Unleashed')
+  const [workToggle, setWorkToggle] = useState('Canva')
   const [expToggle, setExpToggle] = useState('DEVS')
 
   return (

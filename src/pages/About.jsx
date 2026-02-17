@@ -32,19 +32,18 @@ const About = forwardRef((props, ref) => {
             <div className="font-code font-light my-4">
               <RevealFromBtm delay={0.5} duration={1}>
                 <p className="my-3">
-                  My name is Nancy and I am in my final year of a Computer Science
-                  and Commerce degree at the University of Auckland.
+                  My name is Nancy and I'm a frontend software developer at Canva.
+                  I'm currently based in Melbourne, Australia.
                 </p>
               </RevealFromBtm>
               <RevealFromBtm delay={0.75} duration={1}>
                 <p className="my-3">
-                  I have had a passion for visual art and design since I was a kid so, naturally, my drive for programming leans into frontend development. I enjoy dabbling with new software products and technologies, 
-                  especially in the web and mobile development area.
+                  I've had a curious passion for visual art since I was a kid, constantly dabbling with new art mediums and easily spending hours in the stationery section of a store. As I grew older, I projected this love for art into design and frontend development where I began to explore the ever-changing technologies of Javascript and the software world. 
                 </p>
               </RevealFromBtm>
               <RevealFromBtm delay={1} duration={1}>
                 <p className="my-3">
-                  Throughout university, I developed a curiosity for startups and entrepreneurship and this is something I hope to pursue in the near future!
+                  Currently, by day I'm a developer at Canva and by night I'm cooking a new recipe, hanging out with friends or exploring prototypes for project ideas. 
                 </p>
               </RevealFromBtm>
             </div>
