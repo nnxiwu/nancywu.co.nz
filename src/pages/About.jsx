@@ -32,18 +32,17 @@ const About = forwardRef((props, ref) => {
             <div className="font-code font-light my-4">
               <RevealFromBtm delay={0.5} duration={1}>
                 <p className="my-3">
-                  My name is Nancy and I'm a frontend software developer at Canva.
-                  I'm currently based in Melbourne, Australia.
+                  I'm a software engineer based in Australia and I'm currently open for roles in Sydney or Melbourne.
                 </p>
               </RevealFromBtm>
               <RevealFromBtm delay={0.75} duration={1}>
                 <p className="my-3">
-                  I've had a curious passion for visual art since I was a kid, constantly dabbling with new art mediums and easily spending hours in the stationery section of a store. As I grew older, I projected this love for art into design and frontend development where I began to explore the ever-changing technologies of Javascript and the software world. 
+                  I've had a passion for visual art since I was a kid, constantly dabbling with new art mediums and spending hours in the stationery aisle. Now, I project this into crafting accessible, pixel-perfect user interfaces and strive to build the best user experience possible. I'm always keen for a challenge and I believe that life's fulfillment comes from constantly learning new things.
                 </p>
               </RevealFromBtm>
               <RevealFromBtm delay={1} duration={1}>
                 <p className="my-3">
-                  Currently, by day I'm a developer at Canva and by night I'm cooking a new recipe, hanging out with friends or exploring prototypes for project ideas. 
+                  In my spare time, you can find me exploring a new part of town, playing a racquet sport, or out for a run (can't be caught slacking on Strava!)
                 </p>
               </RevealFromBtm>
             </div>
