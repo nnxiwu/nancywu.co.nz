@@ -32,7 +32,7 @@ const About = forwardRef((props, ref) => {
             <div className="font-code font-light my-4">
               <RevealFromBtm delay={0.5} duration={1}>
                 <p className="my-3">
-                  I'm a software engineer based in Australia and I'm currently open for roles in Sydney or Melbourne.
+                  I'm a software engineer based in Australia and I'm actively looking for roles in Sydney or Melbourne.
                 </p>
               </RevealFromBtm>
               <RevealFromBtm delay={0.75} duration={1}>
