@@ -4,6 +4,9 @@ import { RevealFromTop } from "../components/RevealFromTop";
 import { Reveal } from "../components/Reveal";
 import { Enlarge } from "../components/Enlarge";
 
+const navLinkClass =
+  "px-2 invisible md:visible relative after:absolute after:left-2 after:right-2 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 focus-visible:after:scale-x-100";
+
 const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef}) => {
   const scrollToRef = (ref) => {
     window.scrollTo(0, ref.current.offsetTop - 110);
@@ -26,7 +29,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef}) => {
         <ul className="flex items-center">
           <RevealFromTop delay={0.5} duration={0.5}>
             <button
-              className="px-2 hover:underline underline-offset-4 invisible md:visible focus:underline"
+              className={navLinkClass}
               onClick={() => scrollToRef(aboutRef)}
             >
               about
@@ -34,7 +37,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef}) => {
           </RevealFromTop>
           <RevealFromTop delay={0.65} duration={0.5}>
             <button
-              className="px-2 hover:underline underline-offset-4 invisible md:visible focus:underline"
+              className={navLinkClass}
               onClick={() => scrollToRef(experienceRef)}
             >
               experience
@@ -42,7 +45,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef}) => {
           </RevealFromTop>
           <RevealFromTop delay={0.8} duration={0.5}>
             <button
-              className="px-2 hover:underline underline-offset-4 invisible md:visible focus:underline"
+              className={navLinkClass}
               onClick={() => scrollToRef(projectsRef)}
             >
               projects
@@ -50,7 +53,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef}) => {
           </RevealFromTop>
           <RevealFromTop delay={0.95} duration={0.5}>
             <button
-              className="px-2 hover:underline underline-offset-4 invisible md:visible focus:underline"
+              className={navLinkClass}
               onClick={() => scrollToRef(contactRef)}
             >
               contact
