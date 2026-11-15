@@ -49,9 +49,12 @@ const Home = forwardRef(({aboutRef}, ref) => {
           </p>
         </RevealFromBtm>
         <RevealFromBtm delay={5} duration={1}>
-          <button onClick={() => scrollToRef(aboutRef)} className="px-8 md:px-10 py-2 md:py-3 text-xl md:text-2xl border-white border-2 rounded-md hover:bg-midGreen" 
-                  >
-            Find out more!
+          <button
+            onClick={() => scrollToRef(aboutRef)}
+            className="group inline-flex items-center gap-2 px-8 md:px-10 py-2 md:py-3 text-xl md:text-2xl border-white border-2 rounded-md transition-colors duration-300 ease-out hover:bg-midGreen focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lightGreen focus-visible:ring-offset-2 focus-visible:ring-offset-green motion-reduce:transition-none"
+          >
+            <span>Find out more!</span>
+            <span aria-hidden="true" className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1 motion-reduce:transition-none">→</span>
           </button>
         </RevealFromBtm>
       </div>
