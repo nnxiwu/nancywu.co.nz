@@ -15,6 +15,21 @@ import {
 import { PiFigmaLogoThin, PiFileSqlLight } from "react-icons/pi";
 import { SiCsharp } from "react-icons/si";
 
+const technologies = [
+  { name: "JavaScript", Icon: BiLogoJavascript },
+  { name: "React", Icon: BiLogoReact },
+  { name: "HTML5", Icon: BiLogoHtml5 },
+  { name: "CSS3", Icon: BiLogoCss3 },
+  { name: "Tailwind CSS", Icon: BiLogoTailwindCss },
+  { name: "Python", Icon: BiLogoPython },
+  { name: "Java", Icon: BiLogoJava },
+  { name: "C#", Icon: SiCsharp },
+  { name: "SQL", Icon: PiFileSqlLight },
+  { name: "Firebase", Icon: BiLogoFirebase },
+  { name: "Git", Icon: BiLogoGit },
+  { name: "Figma", Icon: PiFigmaLogoThin },
+];
+
 const About = forwardRef((props, ref) => {
   // const { ref: viewRef } = useInView();
 
@@ -57,42 +72,31 @@ const About = forwardRef((props, ref) => {
           </RevealFromBtm>
           <RevealFromBtm delay={2} duration={1}>
             <div className="text-6xl md:text-7xl lg:text-8xl flex flex-wrap">
-              <Enlarge scale={1.2}>
-                <BiLogoJavascript />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <BiLogoReact />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <BiLogoHtml5 />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <BiLogoCss3 />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <BiLogoTailwindCss />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <BiLogoPython />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <BiLogoJava />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <SiCsharp />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <PiFileSqlLight />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <BiLogoFirebase />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <BiLogoGit />
-              </Enlarge>
-              <Enlarge scale={1.2}>
-                <PiFigmaLogoThin />
-              </Enlarge>
+              {technologies.map(({ name, Icon }) => {
+                const tooltipId = `technology-tooltip-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
+                return (
+                  <span
+                    key={name}
+                    tabIndex={0}
+                    role="img"
+                    aria-label={name}
+                    className="group relative inline-flex cursor-pointer rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lightGreen"
+                  >
+                    <Enlarge scale={1.2}>
+                      <Icon />
+                    </Enlarge>
+                    <span
+                      id={tooltipId}
+                      role="tooltip"
+                      aria-hidden="true"
+                      className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 whitespace-nowrap rounded bg-midGreen px-3 py-1 font-code text-sm text-primary opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+                    >
+                      {name}
+                    </span>
+                  </span>
+                );
+              })}
             </div>
           </RevealFromBtm>
         </div>
