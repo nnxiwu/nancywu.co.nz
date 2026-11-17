@@ -6,7 +6,7 @@ import { BiLogoLinkedinSquare } from "react-icons/bi";
 
 const Contact = forwardRef((props, ref) => {
   return (
-    <section ref={ref} className="min-h-[calc(100vh-100px)] md:px-24 max-w-7xl mx-auto font-main text-primary flex-col">
+    <section ref={ref} id="contact" className="min-h-[calc(100vh-100px)] md:px-24 max-w-7xl mx-auto font-main text-primary flex-col">
       <div className="p-10">
         <RevealFromBtm delay={0.75} duration={0.5}>
           <div className="flex">

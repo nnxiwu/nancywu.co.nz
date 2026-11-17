@@ -34,7 +34,7 @@ const About = forwardRef((props, ref) => {
   // const { ref: viewRef } = useInView();
 
   return (
-    <section ref={ref} className="min-h-[calc(100vh-110px)] md:px-24 max-w-7xl mx-auto font-main text-primary flex-col">
+    <section ref={ref} id="about" className="min-h-[calc(100vh-110px)] md:px-24 max-w-7xl mx-auto font-main text-primary flex-col">
       <div className="p-10">
         <div>
           <RevealFromBtm delay={0.25} duration={0.5}>
