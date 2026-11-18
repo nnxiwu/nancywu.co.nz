@@ -7,7 +7,10 @@ import TypeWriter from "typewriter-effect";
 
 const Home = forwardRef(({aboutRef}, ref) => {
   const scrollToRef = (ref) => {
-    window.scrollTo(0, ref.current.offsetTop - 110);
+    window.scrollTo({
+      top: ref.current.offsetTop - 110,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
   }
   return (
     <section ref={ref} id="home" className="min-h-[calc(100vh-100px)] md:px-24 max-w-7xl mx-auto flex items-center">
