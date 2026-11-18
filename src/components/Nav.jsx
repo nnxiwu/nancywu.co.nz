@@ -9,7 +9,10 @@ const navLinkClass =
 
 const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeSection}) => {
   const scrollToRef = (ref) => {
-    window.scrollTo(0, ref.current.offsetTop - 110);
+    window.scrollTo({
+      top: ref.current.offsetTop - 110,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
   }
   const getNavLinkClass = (section) =>
     `${navLinkClass} ${activeSection === section ? "text-grey after:scale-x-100" : "text-lightGreen"}`;
