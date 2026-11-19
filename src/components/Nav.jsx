@@ -7,8 +7,9 @@ import { Enlarge } from "../components/Enlarge";
 const navLinkClass =
   "px-2 invisible md:visible relative transition-colors duration-300 hover:text-grey focus-visible:text-grey after:absolute after:left-2 after:right-2 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 focus-visible:after:scale-x-100";
 
-const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeSection}) => {
-  const scrollToRef = (ref) => {
+const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeSection, onSectionSelect}) => {
+  const scrollToRef = (ref, section) => {
+    onSectionSelect(section);
     window.scrollTo({
       top: ref.current.offsetTop - 110,
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
@@ -24,7 +25,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeS
           <Reveal delay={0.25} duration={2}>
             <Enlarge scale={1.1}>
               <button
-                onClick={() => scrollToRef(homeRef)}
+                onClick={() => scrollToRef(homeRef, "home")}
                 aria-current={activeSection === "home" ? "location" : undefined}
                 className="text-primary transition-colors duration-300 hover:text-primary focus-visible:text-primary"
               >
@@ -41,7 +42,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeS
             <button
               className={getNavLinkClass("about")}
               aria-current={activeSection === "about" ? "location" : undefined}
-              onClick={() => scrollToRef(aboutRef)}
+              onClick={() => scrollToRef(aboutRef, "about")}
             >
               about
             </button>
@@ -50,7 +51,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeS
             <button
               className={getNavLinkClass("experience")}
               aria-current={activeSection === "experience" ? "location" : undefined}
-              onClick={() => scrollToRef(experienceRef)}
+              onClick={() => scrollToRef(experienceRef, "experience")}
             >
               experience
             </button>
@@ -59,7 +60,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeS
             <button
               className={getNavLinkClass("projects")}
               aria-current={activeSection === "projects" ? "location" : undefined}
-              onClick={() => scrollToRef(projectsRef)}
+              onClick={() => scrollToRef(projectsRef, "projects")}
             >
               projects
             </button>
@@ -68,7 +69,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeS
             <button
               className={getNavLinkClass("contact")}
               aria-current={activeSection === "contact" ? "location" : undefined}
-              onClick={() => scrollToRef(contactRef)}
+              onClick={() => scrollToRef(contactRef, "contact")}
             >
               contact
             </button>

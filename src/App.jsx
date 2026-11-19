@@ -14,29 +14,71 @@ function App() {
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
   const [activeSection, setActiveSection] = useState("home");
+  const programmaticNavigationRef = useRef(false);
+
+  const handleSectionSelect = (section) => {
+    programmaticNavigationRef.current = true;
+    setActiveSection(section);
+  };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const currentSection = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => Math.abs(a.boundingClientRect.top - 110) - Math.abs(b.boundingClientRect.top - 110))[0];
+    const sections = [homeRef, aboutRef, experienceRef, projectsRef, contactRef]
+      .map((sectionRef) => sectionRef.current)
+      .filter(Boolean);
 
-        if (currentSection) setActiveSection(currentSection.target.id);
+    const updateActiveSection = () => {
+      const activationLine = 110;
+      const active = sections.find((section) => {
+        const { top, bottom } = section.getBoundingClientRect();
+        return top <= activationLine && bottom > activationLine;
+      });
+
+      if (active) setActiveSection(active.id);
+    };
+
+    const observer = new IntersectionObserver(
+      () => {
+        if (!programmaticNavigationRef.current) updateActiveSection();
       },
       { rootMargin: "-110px 0px -65% 0px", threshold: 0 }
     );
 
-    [homeRef, aboutRef, experienceRef, projectsRef, contactRef].forEach((sectionRef) => {
-      if (sectionRef.current) observer.observe(sectionRef.current);
-    });
+    sections.forEach((section) => observer.observe(section));
 
-    return () => observer.disconnect();
+    const handleManualScroll = () => {
+      if (programmaticNavigationRef.current) {
+        programmaticNavigationRef.current = false;
+        updateActiveSection();
+      }
+    };
+    const handleScrollEnd = () => {
+      programmaticNavigationRef.current = false;
+    };
+    const handleKeyDown = (event) => {
+      if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) {
+        handleManualScroll();
+      }
+    };
+
+    window.addEventListener("wheel", handleManualScroll, { passive: true });
+    window.addEventListener("touchstart", handleManualScroll, { passive: true });
+    window.addEventListener("pointerdown", handleManualScroll, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("scrollend", handleScrollEnd);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("wheel", handleManualScroll);
+      window.removeEventListener("touchstart", handleManualScroll);
+      window.removeEventListener("pointerdown", handleManualScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("scrollend", handleScrollEnd);
+    };
   }, [homeRef, aboutRef, experienceRef, projectsRef, contactRef]);
 
   return (
     <div className="bg-green selection:bg-lightGreen">
-      <Nav homeRef={homeRef} experienceRef={experienceRef} aboutRef={aboutRef} projectsRef={projectsRef} contactRef={contactRef} activeSection={activeSection}/>
+      <Nav homeRef={homeRef} experienceRef={experienceRef} aboutRef={aboutRef} projectsRef={projectsRef} contactRef={contactRef} activeSection={activeSection} onSectionSelect={handleSectionSelect}/>
       <Home ref={homeRef} aboutRef={aboutRef}/>
       <About ref={aboutRef}/>
       <Experience ref={experienceRef} />
