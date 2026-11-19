@@ -1,6 +1,6 @@
-import React, { forwardRef, useState, useRef, useLayoutEffect, useEffect } from "react";
+import React, { forwardRef, useState } from "react";
 import { RevealFromBtm } from "../components/RevealFromBtm";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const Experience = forwardRef((props, ref) => {
   const shouldReduceMotion = useReducedMotion();
@@ -92,43 +92,6 @@ const Experience = forwardRef((props, ref) => {
 
   const [workToggle, setWorkToggle] = useState('Canva')
   const [expToggle, setExpToggle] = useState('DEVS')
-  const [workMinHeight, setWorkMinHeight] = useState(0)
-  const [expMinHeight, setExpMinHeight] = useState(0)
-  const workRefs = useRef([])
-  const expRefs = useRef([])
-
-  useLayoutEffect(() => {
-    let maxWork = 0
-    workRefs.current.forEach(ref => {
-      if (ref) maxWork = Math.max(maxWork, ref.offsetHeight)
-    })
-    setWorkMinHeight(maxWork)
-
-    let maxExp = 0
-    expRefs.current.forEach(ref => {
-      if (ref) maxExp = Math.max(maxExp, ref.offsetHeight)
-    })
-    setExpMinHeight(maxExp)
-  }, [])
-
-  useEffect(() => {
-    const handleResize = () => {
-      let maxWork = 0
-      workRefs.current.forEach(ref => {
-        if (ref) maxWork = Math.max(maxWork, ref.offsetHeight)
-      })
-      setWorkMinHeight(maxWork)
-
-      let maxExp = 0
-      expRefs.current.forEach(ref => {
-        if (ref) maxExp = Math.max(maxExp, ref.offsetHeight)
-      })
-      setExpMinHeight(maxExp)
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   return (
     <section ref={ref} id="experience" className="min-h-[calc(100vh-100px)] md:px-24 max-w-7xl mx-auto font-main text-primary">
@@ -142,7 +105,7 @@ const Experience = forwardRef((props, ref) => {
         <RevealFromBtm delay={0.5} duration={1}>
           <h3 className="text-2xl lg:text-3xl mt-4 mb-2 md:my-4">work</h3>
           <div className="font-code font-light md:flex">
-            <div className="relative flex flex-wrap pb-2 md:flex-col md:pb-0">
+            <div className="relative flex flex-wrap pb-2 md:flex-col md:self-start md:pb-0">
               <span aria-hidden="true" className="absolute inset-y-0 left-0 z-0 hidden w-0.5 bg-lightGreen md:block" />
               {
                 work.map(({id}) => {
@@ -168,47 +131,41 @@ const Experience = forwardRef((props, ref) => {
                 })
               }
             </div>
-            <div className="relative min-w-0 flex-1" style={{ minHeight: workMinHeight }}>
-              <div aria-hidden="true" style={{ position: "absolute", visibility: "hidden", top: -9999, left: 0, width: "100%" }}>
-                {work.map((workItem, index) => (
-                  <div key={workItem.id} ref={el => workRefs.current[index] = el} className="md:ml-6 lg:ml-10">
-                    <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{workItem.company} · {workItem.role}</p>
-                    <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{workItem.startDate} — {workItem.endDate}</p>
-                    <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
-                      {workItem.bullets.map((bullet) => (
-                        <li key={bullet} className="my-2">{bullet}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-              <AnimatePresence mode="wait" initial={false}>
-                {work.filter(({ id }) => id === workToggle).map((work) => (
+            <div className="grid min-w-0 flex-1">
+              {work.map((item) => {
+                const isActive = workToggle === item.id;
+
+                return (
                   <motion.div
-                    key={work.id}
+                    key={item.id}
+                    aria-hidden={!isActive}
                     className="md:ml-6 lg:ml-10"
-                    initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : -8 }}
+                    style={{ gridArea: "1 / 1 / 2 / 2" }}
+                    initial={false}
+                    animate={{
+                      opacity: isActive ? 1 : 0,
+                      y: isActive || shouldReduceMotion ? 0 : 8,
+                      visibility: isActive ? "visible" : "hidden",
+                    }}
                     transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
                   >
-                    <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{work.company} · {work.role}</p>
-                    <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{work.startDate} — {work.endDate}</p>
+                    <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{item.company} · {item.role}</p>
+                    <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{item.startDate} — {item.endDate}</p>
                     <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
-                      {work.bullets.map((bullet) => (
+                      {item.bullets.map((bullet) => (
                         <li key={bullet} className="my-2">{bullet}</li>
                       ))}
                     </ul>
                   </motion.div>
-                ))}
-              </AnimatePresence>
+                );
+              })}
             </div>
           </div>
         </RevealFromBtm>
         <RevealFromBtm delay={1} duration={1}>
           <h3 className="text-2xl lg:text-3xl mt-4 mb-2 md:my-4">extracurricular</h3>
           <div className="font-code font-light md:flex">
-            <div className="relative flex flex-wrap pb-2 md:flex-col md:pb-0">
+            <div className="relative flex flex-wrap pb-2 md:flex-col md:self-start md:pb-0">
               <span aria-hidden="true" className="absolute inset-y-0 left-0 z-0 hidden w-0.5 bg-lightGreen md:block" />
               {
                 extracurricular.map(({id}) => {
@@ -234,28 +191,22 @@ const Experience = forwardRef((props, ref) => {
                 })
               }
             </div>
-            <div className="relative min-w-0 flex-1" style={{ minHeight: expMinHeight }}>
-              <div aria-hidden="true" style={{ position: "absolute", visibility: "hidden", top: -9999, left: 0, width: "100%" }}>
-                {extracurricular.map((expItem, index) => (
-                  <div key={expItem.id} ref={el => expRefs.current[index] = el} className="md:ml-6 lg:ml-10">
-                    <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{expItem.company} · {expItem.role}</p>
-                    <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{expItem.startDate} — {expItem.endDate}</p>
-                    <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
-                      {expItem.bullets.map((bullet) => (
-                        <li key={bullet} className="my-2">{bullet}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-              <AnimatePresence mode="wait" initial={false}>
-                {extracurricular.filter(({ id }) => id === expToggle).map((item) => (
+            <div className="grid min-w-0 flex-1">
+              {extracurricular.map((item) => {
+                const isActive = expToggle === item.id;
+
+                return (
                   <motion.div
                     key={item.id}
+                    aria-hidden={!isActive}
                     className="md:ml-6 lg:ml-10"
-                    initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : -8 }}
+                    style={{ gridArea: "1 / 1 / 2 / 2" }}
+                    initial={false}
+                    animate={{
+                      opacity: isActive ? 1 : 0,
+                      y: isActive || shouldReduceMotion ? 0 : 8,
+                      visibility: isActive ? "visible" : "hidden",
+                    }}
                     transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
                   >
                     <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{item.company} · {item.role}</p>
@@ -266,8 +217,8 @@ const Experience = forwardRef((props, ref) => {
                       ))}
                     </ul>
                   </motion.div>
-                ))}
-              </AnimatePresence>
+                );
+              })}
             </div>
           </div>
         </RevealFromBtm>
