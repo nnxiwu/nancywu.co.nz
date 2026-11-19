@@ -34,9 +34,12 @@ const Contact = forwardRef((props, ref) => {
             </div>
           </RevealFromBtm>
           <RevealFromBtm delay={1.5} duration={1}>
-            <button className="px-8 md:px-10 py-2 md:py-3 text-xl md:text-2xl border-white border-2 rounded-md hover:bg-midGreen">
-              <Link to="mailto:nancywu45@gmail.com">Say Hello</Link>
-            </button>
+            <a
+              href="mailto:nancywu45@gmail.com"
+              className="inline-flex items-center px-8 md:px-10 py-2 md:py-3 text-xl md:text-2xl border-white border-2 rounded-md transition-colors duration-300 ease-out hover:bg-midGreen focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lightGreen focus-visible:ring-offset-2 focus-visible:ring-offset-green motion-reduce:transition-none"
+            >
+              <span>Say Hello</span>
+            </a>
           </RevealFromBtm>
         </div>
       </div>
