@@ -1,7 +1,9 @@
 import React, { forwardRef, useState, useRef, useLayoutEffect, useEffect } from "react";
 import { RevealFromBtm } from "../components/RevealFromBtm";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const Experience = forwardRef((props, ref) => {
+  const shouldReduceMotion = useReducedMotion();
 
   const work = [
     {
@@ -130,31 +132,6 @@ const Experience = forwardRef((props, ref) => {
 
   return (
     <section ref={ref} id="experience" className="min-h-[calc(100vh-100px)] md:px-24 max-w-7xl mx-auto font-main text-primary">
-      {/* Hidden div for measuring heights */}
-      <div style={{ position: 'absolute', visibility: 'hidden', top: -9999, left: -9999 }}>
-        {work.map((workItem, index) => (
-          <div key={workItem.id} ref={el => workRefs.current[index] = el} className="md:ml-6 lg:ml-10">
-            <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{workItem.company} · {workItem.role} </p>
-            <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{workItem.startDate} — {workItem.endDate}</p>
-            <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
-              {workItem.bullets.map((bullet) => (
-                <li key={bullet} className="my-2">{bullet}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-        {extracurricular.map((expItem, index) => (
-          <div key={expItem.id} ref={el => expRefs.current[index] = el} className="md:ml-6 lg:ml-10">
-            <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{expItem.company} · {expItem.role} </p>
-            <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{expItem.startDate} — {expItem.endDate}</p>
-            <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
-              {expItem.bullets.map((bullet) => (
-                <li key={bullet} className="my-2">{bullet}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
       <div className="p-10">
         <RevealFromBtm delay={0.25} duration={0.5}>
           <div className="flex">
@@ -165,87 +142,132 @@ const Experience = forwardRef((props, ref) => {
         <RevealFromBtm delay={0.5} duration={1}>
           <h3 className="text-2xl lg:text-3xl mt-4 mb-2 md:my-4">work</h3>
           <div className="font-code font-light md:flex">
-            <div className="pb-2 md:pb-0 flex flex-wrap md:flex-col">
+            <div className="relative flex flex-wrap pb-2 md:flex-col md:pb-0">
+              <span aria-hidden="true" className="absolute inset-y-0 left-0 z-0 hidden w-0.5 bg-lightGreen md:block" />
               {
                 work.map(({id}) => {
                   return(
-                    <div>
+                    <div key={id} className="relative z-10">
                       <button 
-                        className={`border-b-2 md:border-b-0 md:border-l-2 ${workToggle === id ? 'border-grey text-grey bg-midGreen' : 'border-lightGreen text-lightGreen'} px-4 py-2 md:py-4 w-32 text-center md:text-left`}
+                        className={`relative w-auto min-w-[8rem] whitespace-nowrap border-b-2 border-lightGreen px-4 py-2 text-center transition-colors duration-300 ease-out motion-reduce:transition-none md:w-40 md:min-w-0 md:border-b-0 md:py-4 md:text-left ${workToggle === id ? 'text-grey bg-midGreen' : 'text-lightGreen'}`}
+                        aria-pressed={workToggle === id}
                         onClick={() => setWorkToggle(id)}
                       >
                         {id}
+                        {workToggle === id && (
+                          <motion.span
+                            layoutId="work-toggle-indicator"
+                            aria-hidden="true"
+                            transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: "easeInOut" }}
+                            className="absolute bottom-[-2px] left-0 right-0 z-20 h-0.5 bg-grey md:top-0 md:bottom-0 md:right-auto md:h-auto md:w-0.5"
+                          />
+                        )}
                       </button>
                     </div>
                   )
                 })
               }
             </div>
-            <div style={{ minHeight: workMinHeight }}>
-              {
-                work.map((work) => {
-                  return(
-                    <>
-                      {workToggle === work.id ? (
-                      <div className="md:ml-6 lg:ml-10">
-                        <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{work.company} · {work.role} </p>
-                        <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{work.startDate} — {work.endDate}</p>
-                        <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
-                          {work.bullets.map((bullet) => (
-                            <li key={bullet} className="my-2">
-                              {bullet}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>) : null}
-                    </>
-                    
-                  )
-                })
-              }
+            <div className="relative min-w-0 flex-1" style={{ minHeight: workMinHeight }}>
+              <div aria-hidden="true" style={{ position: "absolute", visibility: "hidden", top: -9999, left: 0, width: "100%" }}>
+                {work.map((workItem, index) => (
+                  <div key={workItem.id} ref={el => workRefs.current[index] = el} className="md:ml-6 lg:ml-10">
+                    <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{workItem.company} · {workItem.role}</p>
+                    <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{workItem.startDate} — {workItem.endDate}</p>
+                    <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
+                      {workItem.bullets.map((bullet) => (
+                        <li key={bullet} className="my-2">{bullet}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <AnimatePresence mode="wait" initial={false}>
+                {work.filter(({ id }) => id === workToggle).map((work) => (
+                  <motion.div
+                    key={work.id}
+                    className="md:ml-6 lg:ml-10"
+                    initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : -8 }}
+                    transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
+                  >
+                    <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{work.company} · {work.role}</p>
+                    <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{work.startDate} — {work.endDate}</p>
+                    <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
+                      {work.bullets.map((bullet) => (
+                        <li key={bullet} className="my-2">{bullet}</li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </div>
         </RevealFromBtm>
         <RevealFromBtm delay={1} duration={1}>
           <h3 className="text-2xl lg:text-3xl mt-4 mb-2 md:my-4">extracurricular</h3>
           <div className="font-code font-light md:flex">
-            <div className="pb-2 md:pb-0 flex flex-wrap md:flex-col ">
+            <div className="relative flex flex-wrap pb-2 md:flex-col md:pb-0">
+              <span aria-hidden="true" className="absolute inset-y-0 left-0 z-0 hidden w-0.5 bg-lightGreen md:block" />
               {
                 extracurricular.map(({id}) => {
                   return(
-                    <div>
+                    <div key={id} className="relative z-10">
                       <button 
-                        className={`border-b-2 md:border-b-0 md:border-l-2  ${expToggle === id ? 'border-grey text-grey bg-midGreen' : 'border-lightGreen text-lightGreen'} px-4 py-2 md:py-4 w-32 text-center md:text-left`}
+                        className={`relative w-auto min-w-[8rem] whitespace-nowrap border-b-2 border-lightGreen px-4 py-2 text-center transition-colors duration-300 ease-out motion-reduce:transition-none md:w-40 md:min-w-0 md:border-b-0 md:py-4 md:text-left ${expToggle === id ? 'text-grey bg-midGreen' : 'text-lightGreen'}`}
+                        aria-pressed={expToggle === id}
                         onClick={() => setExpToggle(id)}
                       >
                         {id}
+                        {expToggle === id && (
+                          <motion.span
+                            layoutId="extracurricular-toggle-indicator"
+                            aria-hidden="true"
+                            transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: "easeInOut" }}
+                            className="absolute bottom-[-2px] left-0 right-0 z-20 h-0.5 bg-grey md:top-0 md:bottom-0 md:right-auto md:h-auto md:w-0.5"
+                          />
+                        )}
                       </button>
                     </div>
                   )
                 })
               }
             </div>
-            <div style={{ minHeight: expMinHeight }}>
-              {
-                extracurricular.map((extracurricular) => {
-                  return(
-                    <>
-                      {expToggle === extracurricular.id ? (
-                      <div className="md:ml-6 lg:ml-10">
-                        <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{extracurricular.company} · {extracurricular.role} </p>
-                        <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{extracurricular.startDate} — {extracurricular.endDate}</p>
-                        <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
-                          {extracurricular.bullets.map((bullet) => (
-                            <li key={bullet} className="my-2">
-                              {bullet}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>) : null}
-                    </>
-                  )
-                })
-              }
+            <div className="relative min-w-0 flex-1" style={{ minHeight: expMinHeight }}>
+              <div aria-hidden="true" style={{ position: "absolute", visibility: "hidden", top: -9999, left: 0, width: "100%" }}>
+                {extracurricular.map((expItem, index) => (
+                  <div key={expItem.id} ref={el => expRefs.current[index] = el} className="md:ml-6 lg:ml-10">
+                    <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{expItem.company} · {expItem.role}</p>
+                    <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{expItem.startDate} — {expItem.endDate}</p>
+                    <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
+                      {expItem.bullets.map((bullet) => (
+                        <li key={bullet} className="my-2">{bullet}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <AnimatePresence mode="wait" initial={false}>
+                {extracurricular.filter(({ id }) => id === expToggle).map((item) => (
+                  <motion.div
+                    key={item.id}
+                    className="md:ml-6 lg:ml-10"
+                    initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : -8 }}
+                    transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
+                  >
+                    <p className="my-1 font-normal text-base md:text-lg lg:text-xl">{item.company} · {item.role}</p>
+                    <p className="my-1 text-grey text-sm md:text-base lg:text-lg">{item.startDate} — {item.endDate}</p>
+                    <ul className="my-1 ml-6 list-disc text-sm md:text-base lg:text-lg">
+                      {item.bullets.map((bullet) => (
+                        <li key={bullet} className="my-2">{bullet}</li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </div>
         </RevealFromBtm>
