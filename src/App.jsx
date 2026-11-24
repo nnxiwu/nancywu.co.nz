@@ -27,13 +27,21 @@ function App() {
       .filter(Boolean);
 
     const updateActiveSection = () => {
-      const activationLine = 110;
-      const active = sections.find((section) => {
+      const viewportTop = 110;
+      const viewportBottom = window.innerHeight;
+      const active = sections.reduce((mostVisible, section) => {
         const { top, bottom } = section.getBoundingClientRect();
-        return top <= activationLine && bottom > activationLine;
-      });
+        const visibleHeight = Math.max(
+          0,
+          Math.min(bottom, viewportBottom) - Math.max(top, viewportTop)
+        );
 
-      if (active) setActiveSection(active.id);
+        return visibleHeight > mostVisible.visibleHeight
+          ? { section, visibleHeight }
+          : mostVisible;
+      }, { section: null, visibleHeight: 0 });
+
+      if (active.section) setActiveSection(active.section.id);
     };
 
     const observer = new IntersectionObserver(
@@ -45,14 +53,21 @@ function App() {
 
     sections.forEach((section) => observer.observe(section));
 
-    const handleManualScroll = () => {
-      if (programmaticNavigationRef.current) {
-        programmaticNavigationRef.current = false;
+    let scrollFrame = null;
+    const handleScroll = () => {
+      if (programmaticNavigationRef.current || scrollFrame !== null) return;
+
+      scrollFrame = window.requestAnimationFrame(() => {
+        scrollFrame = null;
         updateActiveSection();
-      }
+      });
+    };
+    const handleManualScroll = () => {
+      programmaticNavigationRef.current = false;
     };
     const handleScrollEnd = () => {
       programmaticNavigationRef.current = false;
+      updateActiveSection();
     };
     const handleKeyDown = (event) => {
       if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) {
@@ -65,14 +80,17 @@ function App() {
     window.addEventListener("pointerdown", handleManualScroll, { passive: true });
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("scrollend", handleScrollEnd);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       observer.disconnect();
+      if (scrollFrame !== null) window.cancelAnimationFrame(scrollFrame);
       window.removeEventListener("wheel", handleManualScroll);
       window.removeEventListener("touchstart", handleManualScroll);
       window.removeEventListener("pointerdown", handleManualScroll);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("scrollend", handleScrollEnd);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [homeRef, aboutRef, experienceRef, projectsRef, contactRef]);
 
