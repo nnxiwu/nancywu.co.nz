@@ -13,7 +13,9 @@ import {
   BiLogoGit,
 } from "react-icons/bi";
 import { PiFigmaLogoThin, PiFileSqlLight } from "react-icons/pi";
-import { SiCsharp } from "react-icons/si";
+import { GrGraphQl } from "react-icons/gr";
+import { TbBrandCSharp } from "react-icons/tb";
+import { SiClaudecode, SiStorybook } from "react-icons/si";
 
 const technologies = [
   { name: "JavaScript", Icon: BiLogoJavascript },
@@ -21,13 +23,16 @@ const technologies = [
   { name: "HTML5", Icon: BiLogoHtml5 },
   { name: "CSS3", Icon: BiLogoCss3 },
   { name: "Tailwind CSS", Icon: BiLogoTailwindCss },
+  { name: "Storybook", Icon: SiStorybook },
   { name: "Python", Icon: BiLogoPython },
   { name: "Java", Icon: BiLogoJava },
-  { name: "C#", Icon: SiCsharp },
+  { name: "C#", Icon: TbBrandCSharp },
   { name: "SQL", Icon: PiFileSqlLight },
   { name: "Firebase", Icon: BiLogoFirebase },
   { name: "Git", Icon: BiLogoGit },
   { name: "Figma", Icon: PiFigmaLogoThin },
+  { name: "Claude Code", Icon: SiClaudecode },
+  { name: "GraphQL", Icon: GrGraphQl },
 ];
 
 const About = forwardRef((props, ref) => {
@@ -52,7 +57,7 @@ const About = forwardRef((props, ref) => {
               </RevealFromBtm>
               <RevealFromBtm delay={0.75} duration={1}>
                 <p className="my-3">
-                  I've had a passion for visual art since I was a kid, constantly dabbling with new art mediums and spending hours in the stationery aisle. Now, I project this into crafting accessible, pixel-perfect user interfaces and strive to build the best user experience possible. I'm always keen for a challenge and I believe that life's fulfillment comes from constantly learning new things.
+                  I've had a passion for visual art since I was a kid, constantly dabbling with new art mediums and spending hours in the stationery aisle. Now, I project this into crafting delightful, pixel-perfect user interfaces and strive to build the best user experience possible. I'm always keen for a challenge and I believe that life's fulfillment comes from constantly learning new things.
                 </p>
               </RevealFromBtm>
               <RevealFromBtm delay={1} duration={1}>

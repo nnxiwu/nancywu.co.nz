@@ -13,9 +13,9 @@ const Experience = forwardRef((props, ref) => {
       startDate: 'Feb 2026',
       endDate: 'Nov 2026',
       bullets: [
-        'Built the in-app livestream player for Canva Create 2026, which drew 39.4K views',
-        'Co-led the in-product launch of USA Goals, an Ad Council campaign asking Americans to share goals for their communities. Built the video story and submission flow which reached 366K users',
-        'Co-rebuilt canva.com/events, Canva’s global events directory, with filtering and CMS-driven page components, carrying 70+ live events in 30+ locales',
+        'Owned the in-app livestream dialog for Canva Create 2026, seen by 39.4K users',
+        'Shipped filtering and reusable CMS-driven page components for canva.com/events, supporting 70+ live events across 30+ locales',
+        'Built components and AI tooling—including a scaffold script, skills, and evals—for a new landing page design system',
       ],
     },
     {
@@ -36,8 +36,8 @@ const Experience = forwardRef((props, ref) => {
       startDate: 'Jan 2024',
       endDate: 'Nov 2024',
       bullets: [
-        'Developed and maintained production features and APIs for the Inventory Management System using C#, .NET and JavaScript',
-        'Co-led a button tracking feature which reached 350+ users and 1,000+ activity usages, the largest pickup of any new feature released',
+        'Developed and maintained production features and APIs for the Inventory Management System using C#, .NET, and JavaScript',
+        'Co-led the sales invoice payment received status feature, reaching 350+ users and 1,000+ activity usages—the largest pickup of any new feature released',
       ],
     },
     {
