@@ -19,7 +19,7 @@ const Nav = ({homeRef, aboutRef, experienceRef, projectsRef, contactRef, activeS
     `${navLinkClass} ${activeSection === section ? "text-grey after:scale-x-100" : "text-lightGreen"}`;
 
   return (
-    <div className="w-full bg-green px-10 md:px-20 lg:px-30 sticky top-0 overflow-hidden z-10">
+    <div className="w-full bg-green px-10 md:px-20 lg:px-30 sticky top-0 overflow-hidden z-30">
       <nav className="py-8 md:py-10 text-primary font-main text-xl flex justify-between">
         <ul className="flex items-center">
           <Reveal delay={0.25} duration={2}>
