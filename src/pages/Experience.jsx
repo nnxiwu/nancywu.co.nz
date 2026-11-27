@@ -15,7 +15,7 @@ const Experience = forwardRef((props, ref) => {
       bullets: [
         'Owned the in-app livestream dialog for Canva Create 2026, seen by 39.4K users',
         'Shipped filtering and reusable CMS-driven page components for canva.com/events, supporting 70+ live events across 30+ locales',
-        'Built components and AI tooling—including a scaffold script, skills, and evals—for a new landing page design system',
+        'Built components and AI tooling, including a scaffold script, skills, and evals, for a new landing page design system',
       ],
     },
     {
